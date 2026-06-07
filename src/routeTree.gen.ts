@@ -10,15 +10,22 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TodayRouteImport } from './routes/today'
+import { Route as RoadmapRouteImport } from './routes/roadmap'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ChatIndexRouteImport } from './routes/chat.index'
+import { Route as RoadmapDayRouteImport } from './routes/roadmap.$day'
 import { Route as ChatThreadIdRouteImport } from './routes/chat.$threadId'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 
 const TodayRoute = TodayRouteImport.update({
   id: '/today',
   path: '/today',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RoadmapRoute = RoadmapRouteImport.update({
+  id: '/roadmap',
+  path: '/roadmap',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -36,6 +43,11 @@ const ChatIndexRoute = ChatIndexRouteImport.update({
   path: '/chat/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RoadmapDayRoute = RoadmapDayRouteImport.update({
+  id: '/$day',
+  path: '/$day',
+  getParentRoute: () => RoadmapRoute,
+} as any)
 const ChatThreadIdRoute = ChatThreadIdRouteImport.update({
   id: '/chat/$threadId',
   path: '/chat/$threadId',
@@ -50,26 +62,32 @@ const ApiChatRoute = ApiChatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/roadmap': typeof RoadmapRouteWithChildren
   '/today': typeof TodayRoute
   '/api/chat': typeof ApiChatRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
+  '/roadmap/$day': typeof RoadmapDayRoute
   '/chat/': typeof ChatIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/roadmap': typeof RoadmapRouteWithChildren
   '/today': typeof TodayRoute
   '/api/chat': typeof ApiChatRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
+  '/roadmap/$day': typeof RoadmapDayRoute
   '/chat': typeof ChatIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/roadmap': typeof RoadmapRouteWithChildren
   '/today': typeof TodayRoute
   '/api/chat': typeof ApiChatRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
+  '/roadmap/$day': typeof RoadmapDayRoute
   '/chat/': typeof ChatIndexRoute
 }
 export interface FileRouteTypes {
@@ -77,25 +95,38 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/dashboard'
+    | '/roadmap'
     | '/today'
     | '/api/chat'
     | '/chat/$threadId'
+    | '/roadmap/$day'
     | '/chat/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard' | '/today' | '/api/chat' | '/chat/$threadId' | '/chat'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/roadmap'
+    | '/today'
+    | '/api/chat'
+    | '/chat/$threadId'
+    | '/roadmap/$day'
+    | '/chat'
   id:
     | '__root__'
     | '/'
     | '/dashboard'
+    | '/roadmap'
     | '/today'
     | '/api/chat'
     | '/chat/$threadId'
+    | '/roadmap/$day'
     | '/chat/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRoute
+  RoadmapRoute: typeof RoadmapRouteWithChildren
   TodayRoute: typeof TodayRoute
   ApiChatRoute: typeof ApiChatRoute
   ChatThreadIdRoute: typeof ChatThreadIdRoute
@@ -109,6 +140,13 @@ declare module '@tanstack/react-router' {
       path: '/today'
       fullPath: '/today'
       preLoaderRoute: typeof TodayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/roadmap': {
+      id: '/roadmap'
+      path: '/roadmap'
+      fullPath: '/roadmap'
+      preLoaderRoute: typeof RoadmapRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -132,6 +170,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ChatIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/roadmap/$day': {
+      id: '/roadmap/$day'
+      path: '/$day'
+      fullPath: '/roadmap/$day'
+      preLoaderRoute: typeof RoadmapDayRouteImport
+      parentRoute: typeof RoadmapRoute
+    }
     '/chat/$threadId': {
       id: '/chat/$threadId'
       path: '/chat/$threadId'
@@ -149,9 +194,21 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface RoadmapRouteChildren {
+  RoadmapDayRoute: typeof RoadmapDayRoute
+}
+
+const RoadmapRouteChildren: RoadmapRouteChildren = {
+  RoadmapDayRoute: RoadmapDayRoute,
+}
+
+const RoadmapRouteWithChildren =
+  RoadmapRoute._addFileChildren(RoadmapRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
+  RoadmapRoute: RoadmapRouteWithChildren,
   TodayRoute: TodayRoute,
   ApiChatRoute: ApiChatRoute,
   ChatThreadIdRoute: ChatThreadIdRoute,
@@ -160,3 +217,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

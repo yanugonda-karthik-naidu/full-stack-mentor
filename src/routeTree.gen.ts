@@ -11,10 +11,18 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TodayRouteImport } from './routes/today'
 import { Route as RoadmapRouteImport } from './routes/roadmap'
+import { Route as ResumeRouteImport } from './routes/resume'
+import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as ProgressRouteImport } from './routes/progress'
+import { Route as PlacementRouteImport } from './routes/placement'
+import { Route as MotivationRouteImport } from './routes/motivation'
+import { Route as LinkedinRouteImport } from './routes/linkedin'
+import { Route as InterviewRouteImport } from './routes/interview'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ChatIndexRouteImport } from './routes/chat.index'
 import { Route as RoadmapDayRouteImport } from './routes/roadmap.$day'
+import { Route as ProjectsProjectIdRouteImport } from './routes/projects.$projectId'
 import { Route as ChatThreadIdRouteImport } from './routes/chat.$threadId'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 
@@ -26,6 +34,41 @@ const TodayRoute = TodayRouteImport.update({
 const RoadmapRoute = RoadmapRouteImport.update({
   id: '/roadmap',
   path: '/roadmap',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResumeRoute = ResumeRouteImport.update({
+  id: '/resume',
+  path: '/resume',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsRoute = ProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgressRoute = ProgressRouteImport.update({
+  id: '/progress',
+  path: '/progress',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlacementRoute = PlacementRouteImport.update({
+  id: '/placement',
+  path: '/placement',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MotivationRoute = MotivationRouteImport.update({
+  id: '/motivation',
+  path: '/motivation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LinkedinRoute = LinkedinRouteImport.update({
+  id: '/linkedin',
+  path: '/linkedin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InterviewRoute = InterviewRouteImport.update({
+  id: '/interview',
+  path: '/interview',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DashboardRoute = DashboardRouteImport.update({
@@ -48,6 +91,11 @@ const RoadmapDayRoute = RoadmapDayRouteImport.update({
   path: '/$day',
   getParentRoute: () => RoadmapRoute,
 } as any)
+const ProjectsProjectIdRoute = ProjectsProjectIdRouteImport.update({
+  id: '/$projectId',
+  path: '/$projectId',
+  getParentRoute: () => ProjectsRoute,
+} as any)
 const ChatThreadIdRoute = ChatThreadIdRouteImport.update({
   id: '/chat/$threadId',
   path: '/chat/$threadId',
@@ -62,20 +110,36 @@ const ApiChatRoute = ApiChatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/interview': typeof InterviewRoute
+  '/linkedin': typeof LinkedinRoute
+  '/motivation': typeof MotivationRoute
+  '/placement': typeof PlacementRoute
+  '/progress': typeof ProgressRoute
+  '/projects': typeof ProjectsRouteWithChildren
+  '/resume': typeof ResumeRoute
   '/roadmap': typeof RoadmapRouteWithChildren
   '/today': typeof TodayRoute
   '/api/chat': typeof ApiChatRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
+  '/projects/$projectId': typeof ProjectsProjectIdRoute
   '/roadmap/$day': typeof RoadmapDayRoute
   '/chat/': typeof ChatIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/interview': typeof InterviewRoute
+  '/linkedin': typeof LinkedinRoute
+  '/motivation': typeof MotivationRoute
+  '/placement': typeof PlacementRoute
+  '/progress': typeof ProgressRoute
+  '/projects': typeof ProjectsRouteWithChildren
+  '/resume': typeof ResumeRoute
   '/roadmap': typeof RoadmapRouteWithChildren
   '/today': typeof TodayRoute
   '/api/chat': typeof ApiChatRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
+  '/projects/$projectId': typeof ProjectsProjectIdRoute
   '/roadmap/$day': typeof RoadmapDayRoute
   '/chat': typeof ChatIndexRoute
 }
@@ -83,10 +147,18 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/dashboard': typeof DashboardRoute
+  '/interview': typeof InterviewRoute
+  '/linkedin': typeof LinkedinRoute
+  '/motivation': typeof MotivationRoute
+  '/placement': typeof PlacementRoute
+  '/progress': typeof ProgressRoute
+  '/projects': typeof ProjectsRouteWithChildren
+  '/resume': typeof ResumeRoute
   '/roadmap': typeof RoadmapRouteWithChildren
   '/today': typeof TodayRoute
   '/api/chat': typeof ApiChatRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
+  '/projects/$projectId': typeof ProjectsProjectIdRoute
   '/roadmap/$day': typeof RoadmapDayRoute
   '/chat/': typeof ChatIndexRoute
 }
@@ -95,30 +167,54 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/dashboard'
+    | '/interview'
+    | '/linkedin'
+    | '/motivation'
+    | '/placement'
+    | '/progress'
+    | '/projects'
+    | '/resume'
     | '/roadmap'
     | '/today'
     | '/api/chat'
     | '/chat/$threadId'
+    | '/projects/$projectId'
     | '/roadmap/$day'
     | '/chat/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/dashboard'
+    | '/interview'
+    | '/linkedin'
+    | '/motivation'
+    | '/placement'
+    | '/progress'
+    | '/projects'
+    | '/resume'
     | '/roadmap'
     | '/today'
     | '/api/chat'
     | '/chat/$threadId'
+    | '/projects/$projectId'
     | '/roadmap/$day'
     | '/chat'
   id:
     | '__root__'
     | '/'
     | '/dashboard'
+    | '/interview'
+    | '/linkedin'
+    | '/motivation'
+    | '/placement'
+    | '/progress'
+    | '/projects'
+    | '/resume'
     | '/roadmap'
     | '/today'
     | '/api/chat'
     | '/chat/$threadId'
+    | '/projects/$projectId'
     | '/roadmap/$day'
     | '/chat/'
   fileRoutesById: FileRoutesById
@@ -126,6 +222,13 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DashboardRoute: typeof DashboardRoute
+  InterviewRoute: typeof InterviewRoute
+  LinkedinRoute: typeof LinkedinRoute
+  MotivationRoute: typeof MotivationRoute
+  PlacementRoute: typeof PlacementRoute
+  ProgressRoute: typeof ProgressRoute
+  ProjectsRoute: typeof ProjectsRouteWithChildren
+  ResumeRoute: typeof ResumeRoute
   RoadmapRoute: typeof RoadmapRouteWithChildren
   TodayRoute: typeof TodayRoute
   ApiChatRoute: typeof ApiChatRoute
@@ -147,6 +250,55 @@ declare module '@tanstack/react-router' {
       path: '/roadmap'
       fullPath: '/roadmap'
       preLoaderRoute: typeof RoadmapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resume': {
+      id: '/resume'
+      path: '/resume'
+      fullPath: '/resume'
+      preLoaderRoute: typeof ResumeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/progress': {
+      id: '/progress'
+      path: '/progress'
+      fullPath: '/progress'
+      preLoaderRoute: typeof ProgressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/placement': {
+      id: '/placement'
+      path: '/placement'
+      fullPath: '/placement'
+      preLoaderRoute: typeof PlacementRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/motivation': {
+      id: '/motivation'
+      path: '/motivation'
+      fullPath: '/motivation'
+      preLoaderRoute: typeof MotivationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/linkedin': {
+      id: '/linkedin'
+      path: '/linkedin'
+      fullPath: '/linkedin'
+      preLoaderRoute: typeof LinkedinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/interview': {
+      id: '/interview'
+      path: '/interview'
+      fullPath: '/interview'
+      preLoaderRoute: typeof InterviewRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dashboard': {
@@ -177,6 +329,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RoadmapDayRouteImport
       parentRoute: typeof RoadmapRoute
     }
+    '/projects/$projectId': {
+      id: '/projects/$projectId'
+      path: '/$projectId'
+      fullPath: '/projects/$projectId'
+      preLoaderRoute: typeof ProjectsProjectIdRouteImport
+      parentRoute: typeof ProjectsRoute
+    }
     '/chat/$threadId': {
       id: '/chat/$threadId'
       path: '/chat/$threadId'
@@ -194,6 +353,18 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface ProjectsRouteChildren {
+  ProjectsProjectIdRoute: typeof ProjectsProjectIdRoute
+}
+
+const ProjectsRouteChildren: ProjectsRouteChildren = {
+  ProjectsProjectIdRoute: ProjectsProjectIdRoute,
+}
+
+const ProjectsRouteWithChildren = ProjectsRoute._addFileChildren(
+  ProjectsRouteChildren,
+)
+
 interface RoadmapRouteChildren {
   RoadmapDayRoute: typeof RoadmapDayRoute
 }
@@ -208,6 +379,13 @@ const RoadmapRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DashboardRoute: DashboardRoute,
+  InterviewRoute: InterviewRoute,
+  LinkedinRoute: LinkedinRoute,
+  MotivationRoute: MotivationRoute,
+  PlacementRoute: PlacementRoute,
+  ProgressRoute: ProgressRoute,
+  ProjectsRoute: ProjectsRouteWithChildren,
+  ResumeRoute: ResumeRoute,
   RoadmapRoute: RoadmapRouteWithChildren,
   TodayRoute: TodayRoute,
   ApiChatRoute: ApiChatRoute,

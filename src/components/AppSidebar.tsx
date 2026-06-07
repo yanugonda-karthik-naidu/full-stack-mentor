@@ -10,7 +10,7 @@ import {
   ChartLine,
   FileText,
   GraduationCap,
-  Linkedin as LinkedinIcon,
+  Link2,
   Map,
   MessageSquarePlus,
   Plus,
@@ -57,7 +57,7 @@ const STUDY: NavItem[] = [
 const CAREER: NavItem[] = [
   { to: "/interview", label: "Interview Prep", icon: GraduationCap },
   { to: "/resume", label: "Resume Mentor", icon: FileText },
-  { to: "/linkedin", label: "LinkedIn Mentor", icon: LinkedinIcon },
+  { to: "/linkedin", label: "LinkedIn Mentor", icon: Link2 },
   { to: "/placement", label: "Placement Mentor", icon: BookOpen },
   { to: "/motivation", label: "Motivation", icon: Trophy },
 ];

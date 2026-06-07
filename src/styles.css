@@ -159,3 +159,40 @@
     letter-spacing: -0.015em;
   }
 }
+
+.mentor-markdown h1,
+.mentor-markdown h2,
+.mentor-markdown h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  margin-top: 1.2em;
+  margin-bottom: 0.4em;
+}
+.mentor-markdown h2 { font-size: 1.05rem; }
+.mentor-markdown h3 { font-size: 0.95rem; }
+.mentor-markdown p { margin: 0.5em 0; line-height: 1.65; }
+.mentor-markdown ul, .mentor-markdown ol { margin: 0.4em 0 0.6em 1.2em; }
+.mentor-markdown li { margin: 0.2em 0; }
+.mentor-markdown code {
+  background: var(--color-secondary);
+  padding: 0.1em 0.35em;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+.mentor-markdown pre {
+  background: var(--color-secondary);
+  color: var(--color-foreground);
+  padding: 0.85em 1em;
+  border-radius: 10px;
+  overflow-x: auto;
+  font-size: 0.85em;
+  margin: 0.8em 0;
+}
+.mentor-markdown pre code { background: transparent; padding: 0; }
+.mentor-markdown a { color: var(--color-primary); text-decoration: underline; }
+.mentor-markdown blockquote {
+  border-left: 3px solid var(--color-accent);
+  padding-left: 0.8em;
+  color: var(--color-muted-foreground);
+  margin: 0.6em 0;
+}

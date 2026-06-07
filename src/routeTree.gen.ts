@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as TodayRouteImport } from './routes/today'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as RoadmapRouteImport } from './routes/roadmap'
 import { Route as ResumeRouteImport } from './routes/resume'
 import { Route as ProjectsRouteImport } from './routes/projects'
@@ -29,6 +30,11 @@ import { Route as ApiChatRouteImport } from './routes/api/chat'
 const TodayRoute = TodayRouteImport.update({
   id: '/today',
   path: '/today',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RoadmapRoute = RoadmapRouteImport.update({
@@ -118,6 +124,7 @@ export interface FileRoutesByFullPath {
   '/projects': typeof ProjectsRouteWithChildren
   '/resume': typeof ResumeRoute
   '/roadmap': typeof RoadmapRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/today': typeof TodayRoute
   '/api/chat': typeof ApiChatRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
@@ -136,6 +143,7 @@ export interface FileRoutesByTo {
   '/projects': typeof ProjectsRouteWithChildren
   '/resume': typeof ResumeRoute
   '/roadmap': typeof RoadmapRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/today': typeof TodayRoute
   '/api/chat': typeof ApiChatRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
@@ -155,6 +163,7 @@ export interface FileRoutesById {
   '/projects': typeof ProjectsRouteWithChildren
   '/resume': typeof ResumeRoute
   '/roadmap': typeof RoadmapRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/today': typeof TodayRoute
   '/api/chat': typeof ApiChatRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
@@ -175,6 +184,7 @@ export interface FileRouteTypes {
     | '/projects'
     | '/resume'
     | '/roadmap'
+    | '/sitemap.xml'
     | '/today'
     | '/api/chat'
     | '/chat/$threadId'
@@ -193,6 +203,7 @@ export interface FileRouteTypes {
     | '/projects'
     | '/resume'
     | '/roadmap'
+    | '/sitemap.xml'
     | '/today'
     | '/api/chat'
     | '/chat/$threadId'
@@ -211,6 +222,7 @@ export interface FileRouteTypes {
     | '/projects'
     | '/resume'
     | '/roadmap'
+    | '/sitemap.xml'
     | '/today'
     | '/api/chat'
     | '/chat/$threadId'
@@ -230,6 +242,7 @@ export interface RootRouteChildren {
   ProjectsRoute: typeof ProjectsRouteWithChildren
   ResumeRoute: typeof ResumeRoute
   RoadmapRoute: typeof RoadmapRouteWithChildren
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TodayRoute: typeof TodayRoute
   ApiChatRoute: typeof ApiChatRoute
   ChatThreadIdRoute: typeof ChatThreadIdRoute
@@ -243,6 +256,13 @@ declare module '@tanstack/react-router' {
       path: '/today'
       fullPath: '/today'
       preLoaderRoute: typeof TodayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/roadmap': {
@@ -387,6 +407,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProjectsRoute: ProjectsRouteWithChildren,
   ResumeRoute: ResumeRoute,
   RoadmapRoute: RoadmapRouteWithChildren,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   TodayRoute: TodayRoute,
   ApiChatRoute: ApiChatRoute,
   ChatThreadIdRoute: ChatThreadIdRoute,
@@ -395,3 +416,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}

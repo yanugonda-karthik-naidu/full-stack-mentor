@@ -127,7 +127,7 @@ function ChatInner({
               return (
                 <Message key={m.id} from={m.role}>
                   {m.role === "assistant" ? (
-                    <div className="prose prose-sm max-w-none dark:prose-invert prose-pre:bg-secondary prose-pre:text-foreground prose-code:rounded prose-code:bg-secondary prose-code:px-1 prose-code:py-0.5">
+                    <div className="mentor-markdown max-w-none text-foreground">
                       <ReactMarkdown>{text}</ReactMarkdown>
                     </div>
                   ) : (

@@ -9,38 +9,325 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TodayRouteImport } from './routes/today'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
+import { Route as RoadmapRouteImport } from './routes/roadmap'
+import { Route as ResumeRouteImport } from './routes/resume'
+import { Route as ProjectsRouteImport } from './routes/projects'
+import { Route as ProgressRouteImport } from './routes/progress'
+import { Route as PlacementRouteImport } from './routes/placement'
+import { Route as MotivationRouteImport } from './routes/motivation'
+import { Route as LinkedinRouteImport } from './routes/linkedin'
+import { Route as InterviewRouteImport } from './routes/interview'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ChatIndexRouteImport } from './routes/chat.index'
+import { Route as RoadmapDayRouteImport } from './routes/roadmap.$day'
+import { Route as ProjectsProjectIdRouteImport } from './routes/projects.$projectId'
+import { Route as ChatThreadIdRouteImport } from './routes/chat.$threadId'
+import { Route as ApiChatRouteImport } from './routes/api/chat'
 
+const TodayRoute = TodayRouteImport.update({
+  id: '/today',
+  path: '/today',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RoadmapRoute = RoadmapRouteImport.update({
+  id: '/roadmap',
+  path: '/roadmap',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResumeRoute = ResumeRouteImport.update({
+  id: '/resume',
+  path: '/resume',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectsRoute = ProjectsRouteImport.update({
+  id: '/projects',
+  path: '/projects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgressRoute = ProgressRouteImport.update({
+  id: '/progress',
+  path: '/progress',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PlacementRoute = PlacementRouteImport.update({
+  id: '/placement',
+  path: '/placement',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MotivationRoute = MotivationRouteImport.update({
+  id: '/motivation',
+  path: '/motivation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LinkedinRoute = LinkedinRouteImport.update({
+  id: '/linkedin',
+  path: '/linkedin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InterviewRoute = InterviewRouteImport.update({
+  id: '/interview',
+  path: '/interview',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChatIndexRoute = ChatIndexRouteImport.update({
+  id: '/chat/',
+  path: '/chat/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RoadmapDayRoute = RoadmapDayRouteImport.update({
+  id: '/$day',
+  path: '/$day',
+  getParentRoute: () => RoadmapRoute,
+} as any)
+const ProjectsProjectIdRoute = ProjectsProjectIdRouteImport.update({
+  id: '/$projectId',
+  path: '/$projectId',
+  getParentRoute: () => ProjectsRoute,
+} as any)
+const ChatThreadIdRoute = ChatThreadIdRouteImport.update({
+  id: '/chat/$threadId',
+  path: '/chat/$threadId',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiChatRoute = ApiChatRouteImport.update({
+  id: '/api/chat',
+  path: '/api/chat',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/interview': typeof InterviewRoute
+  '/linkedin': typeof LinkedinRoute
+  '/motivation': typeof MotivationRoute
+  '/placement': typeof PlacementRoute
+  '/progress': typeof ProgressRoute
+  '/projects': typeof ProjectsRouteWithChildren
+  '/resume': typeof ResumeRoute
+  '/roadmap': typeof RoadmapRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/today': typeof TodayRoute
+  '/api/chat': typeof ApiChatRoute
+  '/chat/$threadId': typeof ChatThreadIdRoute
+  '/projects/$projectId': typeof ProjectsProjectIdRoute
+  '/roadmap/$day': typeof RoadmapDayRoute
+  '/chat/': typeof ChatIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/interview': typeof InterviewRoute
+  '/linkedin': typeof LinkedinRoute
+  '/motivation': typeof MotivationRoute
+  '/placement': typeof PlacementRoute
+  '/progress': typeof ProgressRoute
+  '/projects': typeof ProjectsRouteWithChildren
+  '/resume': typeof ResumeRoute
+  '/roadmap': typeof RoadmapRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/today': typeof TodayRoute
+  '/api/chat': typeof ApiChatRoute
+  '/chat/$threadId': typeof ChatThreadIdRoute
+  '/projects/$projectId': typeof ProjectsProjectIdRoute
+  '/roadmap/$day': typeof RoadmapDayRoute
+  '/chat': typeof ChatIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/dashboard': typeof DashboardRoute
+  '/interview': typeof InterviewRoute
+  '/linkedin': typeof LinkedinRoute
+  '/motivation': typeof MotivationRoute
+  '/placement': typeof PlacementRoute
+  '/progress': typeof ProgressRoute
+  '/projects': typeof ProjectsRouteWithChildren
+  '/resume': typeof ResumeRoute
+  '/roadmap': typeof RoadmapRouteWithChildren
+  '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/today': typeof TodayRoute
+  '/api/chat': typeof ApiChatRoute
+  '/chat/$threadId': typeof ChatThreadIdRoute
+  '/projects/$projectId': typeof ProjectsProjectIdRoute
+  '/roadmap/$day': typeof RoadmapDayRoute
+  '/chat/': typeof ChatIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/dashboard'
+    | '/interview'
+    | '/linkedin'
+    | '/motivation'
+    | '/placement'
+    | '/progress'
+    | '/projects'
+    | '/resume'
+    | '/roadmap'
+    | '/sitemap.xml'
+    | '/today'
+    | '/api/chat'
+    | '/chat/$threadId'
+    | '/projects/$projectId'
+    | '/roadmap/$day'
+    | '/chat/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/dashboard'
+    | '/interview'
+    | '/linkedin'
+    | '/motivation'
+    | '/placement'
+    | '/progress'
+    | '/projects'
+    | '/resume'
+    | '/roadmap'
+    | '/sitemap.xml'
+    | '/today'
+    | '/api/chat'
+    | '/chat/$threadId'
+    | '/projects/$projectId'
+    | '/roadmap/$day'
+    | '/chat'
+  id:
+    | '__root__'
+    | '/'
+    | '/dashboard'
+    | '/interview'
+    | '/linkedin'
+    | '/motivation'
+    | '/placement'
+    | '/progress'
+    | '/projects'
+    | '/resume'
+    | '/roadmap'
+    | '/sitemap.xml'
+    | '/today'
+    | '/api/chat'
+    | '/chat/$threadId'
+    | '/projects/$projectId'
+    | '/roadmap/$day'
+    | '/chat/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  DashboardRoute: typeof DashboardRoute
+  InterviewRoute: typeof InterviewRoute
+  LinkedinRoute: typeof LinkedinRoute
+  MotivationRoute: typeof MotivationRoute
+  PlacementRoute: typeof PlacementRoute
+  ProgressRoute: typeof ProgressRoute
+  ProjectsRoute: typeof ProjectsRouteWithChildren
+  ResumeRoute: typeof ResumeRoute
+  RoadmapRoute: typeof RoadmapRouteWithChildren
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
+  TodayRoute: typeof TodayRoute
+  ApiChatRoute: typeof ApiChatRoute
+  ChatThreadIdRoute: typeof ChatThreadIdRoute
+  ChatIndexRoute: typeof ChatIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/today': {
+      id: '/today'
+      path: '/today'
+      fullPath: '/today'
+      preLoaderRoute: typeof TodayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/roadmap': {
+      id: '/roadmap'
+      path: '/roadmap'
+      fullPath: '/roadmap'
+      preLoaderRoute: typeof RoadmapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/resume': {
+      id: '/resume'
+      path: '/resume'
+      fullPath: '/resume'
+      preLoaderRoute: typeof ResumeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projects': {
+      id: '/projects'
+      path: '/projects'
+      fullPath: '/projects'
+      preLoaderRoute: typeof ProjectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/progress': {
+      id: '/progress'
+      path: '/progress'
+      fullPath: '/progress'
+      preLoaderRoute: typeof ProgressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/placement': {
+      id: '/placement'
+      path: '/placement'
+      fullPath: '/placement'
+      preLoaderRoute: typeof PlacementRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/motivation': {
+      id: '/motivation'
+      path: '/motivation'
+      fullPath: '/motivation'
+      preLoaderRoute: typeof MotivationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/linkedin': {
+      id: '/linkedin'
+      path: '/linkedin'
+      fullPath: '/linkedin'
+      preLoaderRoute: typeof LinkedinRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/interview': {
+      id: '/interview'
+      path: '/interview'
+      fullPath: '/interview'
+      preLoaderRoute: typeof InterviewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,22 +335,84 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/chat/': {
+      id: '/chat/'
+      path: '/chat'
+      fullPath: '/chat/'
+      preLoaderRoute: typeof ChatIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/roadmap/$day': {
+      id: '/roadmap/$day'
+      path: '/$day'
+      fullPath: '/roadmap/$day'
+      preLoaderRoute: typeof RoadmapDayRouteImport
+      parentRoute: typeof RoadmapRoute
+    }
+    '/projects/$projectId': {
+      id: '/projects/$projectId'
+      path: '/$projectId'
+      fullPath: '/projects/$projectId'
+      preLoaderRoute: typeof ProjectsProjectIdRouteImport
+      parentRoute: typeof ProjectsRoute
+    }
+    '/chat/$threadId': {
+      id: '/chat/$threadId'
+      path: '/chat/$threadId'
+      fullPath: '/chat/$threadId'
+      preLoaderRoute: typeof ChatThreadIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/chat': {
+      id: '/api/chat'
+      path: '/api/chat'
+      fullPath: '/api/chat'
+      preLoaderRoute: typeof ApiChatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface ProjectsRouteChildren {
+  ProjectsProjectIdRoute: typeof ProjectsProjectIdRoute
+}
+
+const ProjectsRouteChildren: ProjectsRouteChildren = {
+  ProjectsProjectIdRoute: ProjectsProjectIdRoute,
+}
+
+const ProjectsRouteWithChildren = ProjectsRoute._addFileChildren(
+  ProjectsRouteChildren,
+)
+
+interface RoadmapRouteChildren {
+  RoadmapDayRoute: typeof RoadmapDayRoute
+}
+
+const RoadmapRouteChildren: RoadmapRouteChildren = {
+  RoadmapDayRoute: RoadmapDayRoute,
+}
+
+const RoadmapRouteWithChildren =
+  RoadmapRoute._addFileChildren(RoadmapRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  DashboardRoute: DashboardRoute,
+  InterviewRoute: InterviewRoute,
+  LinkedinRoute: LinkedinRoute,
+  MotivationRoute: MotivationRoute,
+  PlacementRoute: PlacementRoute,
+  ProgressRoute: ProgressRoute,
+  ProjectsRoute: ProjectsRouteWithChildren,
+  ResumeRoute: ResumeRoute,
+  RoadmapRoute: RoadmapRouteWithChildren,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
+  TodayRoute: TodayRoute,
+  ApiChatRoute: ApiChatRoute,
+  ChatThreadIdRoute: ChatThreadIdRoute,
+  ChatIndexRoute: ChatIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}

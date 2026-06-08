@@ -8,6 +8,8 @@ import {
   Briefcase,
   Calendar,
   ChartLine,
+  ClipboardCheck,
+  Code2,
   FileText,
   GraduationCap,
   Link2,
@@ -46,12 +48,15 @@ import {
 
 type NavItem = { to: string; label: string; icon: LucideIcon };
 
-const STUDY: NavItem[] = [
+const LEARN: NavItem[] = [
   { to: "/dashboard", label: "Dashboard", icon: ChartLine },
-  { to: "/today", label: "Today's Tasks", icon: Calendar },
+  { to: "/today", label: "Today's Mission", icon: Calendar },
   { to: "/roadmap", label: "Learning Roadmap", icon: Map },
+  { to: "/practice", label: "Practice Center", icon: Code2 },
+];
+
+const BUILD: NavItem[] = [
   { to: "/projects", label: "Projects", icon: Briefcase },
-  { to: "/progress", label: "Progress Tracking", icon: Target },
 ];
 
 const CAREER: NavItem[] = [
@@ -59,6 +64,11 @@ const CAREER: NavItem[] = [
   { to: "/resume", label: "Resume Mentor", icon: FileText },
   { to: "/linkedin", label: "LinkedIn Mentor", icon: Link2 },
   { to: "/placement", label: "Placement Mentor", icon: BookOpen },
+];
+
+const PROGRESS: NavItem[] = [
+  { to: "/progress", label: "Progress Tracking", icon: Target },
+  { to: "/assessment", label: "Weekly Assessment", icon: ClipboardCheck },
   { to: "/motivation", label: "Motivation", icon: Trophy },
 ];
 
@@ -128,10 +138,28 @@ export function AppSidebar() {
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Study</SidebarGroupLabel>
+          <SidebarGroupLabel>Learn</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {STUDY.map((item) => (
+              {LEARN.map((item) => (
+                <SidebarMenuItem key={item.to}>
+                  <SidebarMenuButton asChild isActive={isActive(item.to)}>
+                    <Link to={item.to} className="flex items-center gap-2">
+                      <item.icon className="h-4 w-4" />
+                      <span>{item.label}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
+          <SidebarGroupLabel>Build</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {BUILD.map((item) => (
                 <SidebarMenuItem key={item.to}>
                   <SidebarMenuButton asChild isActive={isActive(item.to)}>
                     <Link to={item.to} className="flex items-center gap-2">
@@ -164,8 +192,26 @@ export function AppSidebar() {
         </SidebarGroup>
 
         <SidebarGroup>
+          <SidebarGroupLabel>Progress</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {PROGRESS.map((item) => (
+                <SidebarMenuItem key={item.to}>
+                  <SidebarMenuButton asChild isActive={isActive(item.to)}>
+                    <Link to={item.to} className="flex items-center gap-2">
+                      <item.icon className="h-4 w-4" />
+                      <span>{item.label}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup>
           <SidebarGroupLabel className="flex items-center justify-between">
-            <span>Recent Chats</span>
+            <span>AI Mentor</span>
             <button
               type="button"
               onClick={handleNew}

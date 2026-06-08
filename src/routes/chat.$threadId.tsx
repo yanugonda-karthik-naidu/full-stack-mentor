@@ -19,8 +19,9 @@ import {
   PromptInputTextarea,
 } from "@/components/ai-elements/prompt-input";
 import { Shimmer } from "@/components/ai-elements/shimmer";
-import { currentDayNumber, getThread, upsertThread } from "@/lib/storage";
+import { currentDayNumber, getThread, loadProgress, upsertThread } from "@/lib/storage";
 import { getDay } from "@/lib/datasets/roadmap";
+import { buildStudentContext } from "@/lib/mentor-prompt";
 
 export const Route = createFileRoute("/chat/$threadId")({
   component: ChatThread,
@@ -44,7 +45,7 @@ function ChatThread() {
 
   if (initialMessages === null) {
     return (
-      <div className="flex h-[calc(100vh-3rem)] items-center justify-center text-sm text-muted-foreground">
+      <div className="flex h-[calc(100dvh-3rem)] items-center justify-center text-sm text-muted-foreground">
         Loading…
       </div>
     );
@@ -65,7 +66,10 @@ function ChatInner({
   const transport = useMemo(() => new DefaultChatTransport({ api: "/api/chat" }), []);
   const day = currentDayNumber();
   const today = getDay(day);
-  const context = `Student is on Day ${day} of the 120-day roadmap. Current module: ${today.module}. Today's topic: ${today.topic}.`;
+  const context = useMemo(
+    () => buildStudentContext({ day, progress: loadProgress() }),
+    [day],
+  );
 
   const { messages, sendMessage, status } = useChat({
     id: threadId,
@@ -97,7 +101,7 @@ function ChatInner({
   };
 
   return (
-    <div className="mx-auto flex h-[calc(100vh-3rem)] w-full max-w-3xl flex-col">
+    <div className="mx-auto flex h-[calc(100dvh-3rem)] w-full max-w-3xl flex-col">
       <Conversation className="flex-1">
         <ConversationContent>
           {messages.length === 0 ? (

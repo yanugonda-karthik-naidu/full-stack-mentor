@@ -15,11 +15,13 @@ import { Route as RoadmapRouteImport } from './routes/roadmap'
 import { Route as ResumeRouteImport } from './routes/resume'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as ProgressRouteImport } from './routes/progress'
+import { Route as PracticeRouteImport } from './routes/practice'
 import { Route as PlacementRouteImport } from './routes/placement'
 import { Route as MotivationRouteImport } from './routes/motivation'
 import { Route as LinkedinRouteImport } from './routes/linkedin'
 import { Route as InterviewRouteImport } from './routes/interview'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as AssessmentRouteImport } from './routes/assessment'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ChatIndexRouteImport } from './routes/chat.index'
 import { Route as RoadmapDayRouteImport } from './routes/roadmap.$day'
@@ -57,6 +59,11 @@ const ProgressRoute = ProgressRouteImport.update({
   path: '/progress',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PracticeRoute = PracticeRouteImport.update({
+  id: '/practice',
+  path: '/practice',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PlacementRoute = PlacementRouteImport.update({
   id: '/placement',
   path: '/placement',
@@ -80,6 +87,11 @@ const InterviewRoute = InterviewRouteImport.update({
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AssessmentRoute = AssessmentRouteImport.update({
+  id: '/assessment',
+  path: '/assessment',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -115,11 +127,13 @@ const ApiChatRoute = ApiChatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/assessment': typeof AssessmentRoute
   '/dashboard': typeof DashboardRoute
   '/interview': typeof InterviewRoute
   '/linkedin': typeof LinkedinRoute
   '/motivation': typeof MotivationRoute
   '/placement': typeof PlacementRoute
+  '/practice': typeof PracticeRoute
   '/progress': typeof ProgressRoute
   '/projects': typeof ProjectsRouteWithChildren
   '/resume': typeof ResumeRoute
@@ -134,11 +148,13 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/assessment': typeof AssessmentRoute
   '/dashboard': typeof DashboardRoute
   '/interview': typeof InterviewRoute
   '/linkedin': typeof LinkedinRoute
   '/motivation': typeof MotivationRoute
   '/placement': typeof PlacementRoute
+  '/practice': typeof PracticeRoute
   '/progress': typeof ProgressRoute
   '/projects': typeof ProjectsRouteWithChildren
   '/resume': typeof ResumeRoute
@@ -154,11 +170,13 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/assessment': typeof AssessmentRoute
   '/dashboard': typeof DashboardRoute
   '/interview': typeof InterviewRoute
   '/linkedin': typeof LinkedinRoute
   '/motivation': typeof MotivationRoute
   '/placement': typeof PlacementRoute
+  '/practice': typeof PracticeRoute
   '/progress': typeof ProgressRoute
   '/projects': typeof ProjectsRouteWithChildren
   '/resume': typeof ResumeRoute
@@ -175,11 +193,13 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/assessment'
     | '/dashboard'
     | '/interview'
     | '/linkedin'
     | '/motivation'
     | '/placement'
+    | '/practice'
     | '/progress'
     | '/projects'
     | '/resume'
@@ -194,11 +214,13 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/assessment'
     | '/dashboard'
     | '/interview'
     | '/linkedin'
     | '/motivation'
     | '/placement'
+    | '/practice'
     | '/progress'
     | '/projects'
     | '/resume'
@@ -213,11 +235,13 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/assessment'
     | '/dashboard'
     | '/interview'
     | '/linkedin'
     | '/motivation'
     | '/placement'
+    | '/practice'
     | '/progress'
     | '/projects'
     | '/resume'
@@ -233,11 +257,13 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AssessmentRoute: typeof AssessmentRoute
   DashboardRoute: typeof DashboardRoute
   InterviewRoute: typeof InterviewRoute
   LinkedinRoute: typeof LinkedinRoute
   MotivationRoute: typeof MotivationRoute
   PlacementRoute: typeof PlacementRoute
+  PracticeRoute: typeof PracticeRoute
   ProgressRoute: typeof ProgressRoute
   ProjectsRoute: typeof ProjectsRouteWithChildren
   ResumeRoute: typeof ResumeRoute
@@ -293,6 +319,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProgressRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/practice': {
+      id: '/practice'
+      path: '/practice'
+      fullPath: '/practice'
+      preLoaderRoute: typeof PracticeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/placement': {
       id: '/placement'
       path: '/placement'
@@ -326,6 +359,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/assessment': {
+      id: '/assessment'
+      path: '/assessment'
+      fullPath: '/assessment'
+      preLoaderRoute: typeof AssessmentRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -398,11 +438,13 @@ const RoadmapRouteWithChildren =
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AssessmentRoute: AssessmentRoute,
   DashboardRoute: DashboardRoute,
   InterviewRoute: InterviewRoute,
   LinkedinRoute: LinkedinRoute,
   MotivationRoute: MotivationRoute,
   PlacementRoute: PlacementRoute,
+  PracticeRoute: PracticeRoute,
   ProgressRoute: ProgressRoute,
   ProjectsRoute: ProjectsRouteWithChildren,
   ResumeRoute: ResumeRoute,

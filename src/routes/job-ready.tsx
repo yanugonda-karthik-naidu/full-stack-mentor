@@ -22,12 +22,28 @@ export const Route = createFileRoute("/job-ready")({
 });
 
 const PILLARS: Array<{ name: string; modules: string[]; weight: number }> = [
-  { name: "Java Core", modules: ["Java Foundations", "Object-Oriented Programming", "Exceptions, Collections & Generics"], weight: 25 },
+  {
+    name: "Java Core",
+    modules: [
+      "Java Foundations",
+      "Object-Oriented Programming",
+      "Exceptions, Collections & Generics",
+    ],
+    weight: 25,
+  },
   { name: "SQL", modules: ["SQL & MySQL"], weight: 15 },
   { name: "Frontend", modules: ["HTML, CSS & JavaScript"], weight: 15 },
-  { name: "Backend", modules: ["Spring Boot & REST APIs", "JPA, Hibernate & MySQL Integration"], weight: 20 },
-  { name: "Projects", modules: [], weight: 15 },
-  { name: "Interview Prep", modules: ["Interview & Placement Prep"], weight: 10 },
+  {
+    name: "Backend",
+    modules: ["Spring Boot & REST APIs", "Full Stack Integration"],
+    weight: 20,
+  },
+  { name: "Projects", modules: ["Capstone Project"], weight: 15 },
+  {
+    name: "Interview Prep",
+    modules: ["Interview Preparation", "Resume, LinkedIn & Placement"],
+    weight: 10,
+  },
 ];
 
 function JobReadyPage() {

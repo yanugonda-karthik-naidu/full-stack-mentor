@@ -1,11 +1,27 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, CheckCircle2, Flame, Sparkles, Target, Trophy } from "lucide-react";
+import {
+  ArrowRight,
+  CheckCircle2,
+  Compass,
+  Flame,
+  Gauge,
+  Sparkles,
+  Target,
+  Trophy,
+} from "lucide-react";
 import { useEffect, useState } from "react";
 
 import { PageShell } from "@/components/PageShell";
 import { Progress } from "@/components/ui/progress";
 import { ROADMAP_DAYS, getDay, MODULES, moduleDays } from "@/lib/datasets/roadmap";
 import { PROJECTS } from "@/lib/datasets/projects";
+import {
+  computePillars,
+  overallReadiness,
+  readinessStage,
+  recommendationFor,
+  topGaps,
+} from "@/lib/job-readiness";
 import {
   currentDayNumber,
   loadProgress,
@@ -49,32 +65,18 @@ function Dashboard() {
   const topicDifficulty =
     day <= 30 ? "Beginner" : day <= 70 ? "Intermediate" : "Advanced";
 
+  // Job readiness (shared calculator with /job-ready)
+  const pillars = computePillars(progress);
+  const jobReadiness = overallReadiness(pillars);
+  const readinessStageLabel = readinessStage(jobReadiness);
+  const gaps = topGaps(pillars);
+
   // Per-module progress
   const moduleProgress = MODULES.map((name) => {
     const days = moduleDays(name);
     const done = days.filter((d) => progress.completedTopics[String(d.day)]).length;
     return { name, pct: Math.round((done / days.length) * 100), done, total: days.length };
   });
-
-  const readinessStage =
-    overallPct < 15
-      ? "Beginner Stage"
-      : overallPct < 40
-      ? "Foundation Builder"
-      : overallPct < 70
-      ? "Project Ready"
-      : overallPct < 90
-      ? "Interview Ready"
-      : "Job Ready";
-
-  const jobReadiness = Math.min(
-    100,
-    Math.round(
-      overallPct * 0.6 +
-        (progress.completedProjects.length / Math.max(1, PROJECTS.length)) * 30 +
-        Math.min(progress.streak, 30) * 0.33,
-    ),
-  );
 
   return (
     <PageShell title="" description="">
@@ -195,12 +197,20 @@ function Dashboard() {
 
         {/* Job readiness */}
         <div className="rounded-xl border border-border bg-card p-6">
-          <p className="text-xs uppercase tracking-wider text-muted-foreground">
-            Job readiness
-          </p>
+          <div className="flex items-center justify-between">
+            <p className="text-xs uppercase tracking-wider text-muted-foreground">
+              Job readiness
+            </p>
+            <Link
+              to="/job-ready"
+              className="text-xs text-primary hover:underline"
+            >
+              Full report →
+            </Link>
+          </div>
           <div className="mt-2 flex items-baseline gap-2">
             <span className="font-display text-3xl font-semibold">{jobReadiness}%</span>
-            <span className="text-sm text-muted-foreground">{readinessStage}</span>
+            <span className="text-sm text-muted-foreground">{readinessStageLabel}</span>
           </div>
           <Progress value={jobReadiness} className="mt-3 h-2" />
           <ul className="mt-4 space-y-2 text-sm">
@@ -226,6 +236,45 @@ function Dashboard() {
             Take this week's assessment <ArrowRight className="h-3.5 w-3.5" />
           </Link>
         </div>
+      </div>
+
+      {/* Missing skills & next actions (Job Readiness summary) */}
+      <div className="mt-6 rounded-xl border border-amber-500/30 bg-amber-500/5 p-6">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <Compass className="h-4 w-4 text-amber-600" />
+            <h2 className="font-display text-base font-semibold">
+              Missing skills · next actions
+            </h2>
+          </div>
+          <Link to="/job-ready" className="inline-flex items-center gap-1 text-xs text-primary hover:underline">
+            <Gauge className="h-3.5 w-3.5" /> Open full analysis
+          </Link>
+        </div>
+        {gaps.length === 0 ? (
+          <p className="mt-3 text-sm text-muted-foreground">
+            No major gaps right now — polish your resume and start applying.
+          </p>
+        ) : (
+          <ul className="mt-3 grid gap-2 sm:grid-cols-3">
+            {gaps.map((g) => (
+              <li
+                key={g.name}
+                className="rounded-lg border border-border/60 bg-card p-3 text-sm"
+              >
+                <div className="flex items-baseline justify-between">
+                  <span className="font-semibold">{g.name}</span>
+                  <span className="text-xs text-amber-700 dark:text-amber-300">
+                    {g.pct}%
+                  </span>
+                </div>
+                <p className="mt-1 text-xs text-muted-foreground">
+                  {recommendationFor(g.name)}
+                </p>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       {/* Learning journey */}

@@ -4,7 +4,14 @@ import { useEffect, useState } from "react";
 
 import { PageShell } from "@/components/PageShell";
 import { Progress } from "@/components/ui/progress";
-import { MODULES, ROADMAP_DAYS, moduleDays } from "@/lib/datasets/roadmap";
+import {
+  computePillars,
+  overallReadiness,
+  readinessStage,
+  recommendationFor,
+  TOTAL_DAYS,
+  topGaps,
+} from "@/lib/job-readiness";
 import { loadProgress, type ProgressState } from "@/lib/storage";
 
 export const Route = createFileRoute("/job-ready")({
@@ -21,31 +28,6 @@ export const Route = createFileRoute("/job-ready")({
   component: JobReadyPage,
 });
 
-const PILLARS: Array<{ name: string; modules: string[]; weight: number }> = [
-  {
-    name: "Java Core",
-    modules: [
-      "Java Foundations",
-      "Object-Oriented Programming",
-      "Exceptions, Collections & Generics",
-    ],
-    weight: 25,
-  },
-  { name: "SQL", modules: ["SQL & MySQL"], weight: 15 },
-  { name: "Frontend", modules: ["HTML, CSS & JavaScript"], weight: 15 },
-  {
-    name: "Backend",
-    modules: ["Spring Boot & REST APIs", "Full Stack Integration"],
-    weight: 20,
-  },
-  { name: "Projects", modules: ["Capstone Project"], weight: 15 },
-  {
-    name: "Interview Prep",
-    modules: ["Interview Preparation", "Resume, LinkedIn & Placement"],
-    weight: 10,
-  },
-];
-
 function JobReadyPage() {
   const [progress, setProgress] = useState<ProgressState | null>(null);
 
@@ -53,42 +35,17 @@ function JobReadyPage() {
     setProgress(loadProgress());
   }, []);
 
-  const pillarScores = PILLARS.map((p) => {
-    if (p.name === "Projects") {
-      const total = 8;
-      const done = progress?.completedProjects.length ?? 0;
-      const pct = Math.min(100, Math.round((done / total) * 100));
-      return { ...p, pct, done, total, label: `${done}/${total} projects shipped` };
-    }
-    const relevantDays = MODULES.filter((m) => p.modules.includes(m)).flatMap((m) =>
-      moduleDays(m),
-    );
-    const total = relevantDays.length;
-    const done = relevantDays.filter((d) => progress?.completedTopics[String(d.day)]).length;
-    const pct = total === 0 ? 0 : Math.round((done / total) * 100);
-    return { ...p, pct, done, total, label: `${done}/${total} days completed` };
-  });
-
-  const overall = Math.round(
-    pillarScores.reduce((acc, p) => acc + (p.pct * p.weight) / 100, 0),
-  );
-
-  const stage =
-    overall < 20
-      ? "Just Starting"
-      : overall < 40
-        ? "Foundation Builder"
-        : overall < 60
-          ? "Coding Confident"
-          : overall < 80
-            ? "Project Ready"
-            : "Job Ready";
-
-  const gaps = pillarScores
-    .filter((p) => p.pct < 60)
-    .sort((a, b) => a.pct - b.pct)
-    .slice(0, 3);
-
+  const safeProgress = progress ?? {
+    completedDays: [],
+    completedTopics: {},
+    completedProjects: [],
+    streak: 0,
+    moduleProgress: {},
+  };
+  const pillarScores = computePillars(safeProgress);
+  const overall = overallReadiness(pillarScores);
+  const stage = readinessStage(overall);
+  const gaps = topGaps(pillarScores);
   const strengths = pillarScores.filter((p) => p.pct >= 60).map((p) => p.name);
 
   return (
@@ -104,7 +61,7 @@ function JobReadyPage() {
           <p className="mt-3 font-display text-5xl font-bold text-primary">{overall}%</p>
           <p className="mt-1 text-sm font-semibold">{stage}</p>
           <p className="mt-3 text-xs text-muted-foreground">
-            Day {progress?.completedDays.length ?? 0} of {ROADMAP_DAYS.length} ·{" "}
+            Day {progress?.completedDays.length ?? 0} of {TOTAL_DAYS} ·{" "}
             {progress?.streak ?? 0}🔥 streak
           </p>
           <Link
@@ -195,25 +152,6 @@ function JobReadyPage() {
       </div>
     </PageShell>
   );
-}
-
-function recommendationFor(pillar: string): string {
-  switch (pillar) {
-    case "Java Core":
-      return "Lock OOP + Collections; solve 5 problems daily on HackerRank Java.";
-    case "SQL":
-      return "Practice JOINS + GROUP BY on HackerRank SQL Basic + LeetCode #176.";
-    case "Frontend":
-      return "Build a portfolio + a ToDo app with HTML/CSS/vanilla JS.";
-    case "Backend":
-      return "Build one Spring Boot CRUD with JPA + MySQL end-to-end.";
-    case "Projects":
-      return "Ship one resume-worthy project this month with GitHub README.";
-    case "Interview Prep":
-      return "Daily: 5 OOP questions + explain your project out loud.";
-    default:
-      return "Open the mentor and ask for a focused plan.";
-  }
 }
 
 function buildSevenDayPlan(scores: Array<{ name: string; pct: number }>): string[] {

@@ -28,6 +28,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ChatIndexRouteImport } from './routes/chat.index'
 import { Route as RoadmapDayRouteImport } from './routes/roadmap.$day'
 import { Route as ProjectsProjectIdRouteImport } from './routes/projects.$projectId'
+import { Route as CompaniesCompanyIdRouteImport } from './routes/companies.$companyId'
 import { Route as ChatThreadIdRouteImport } from './routes/chat.$threadId'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 
@@ -126,6 +127,11 @@ const ProjectsProjectIdRoute = ProjectsProjectIdRouteImport.update({
   path: '/$projectId',
   getParentRoute: () => ProjectsRoute,
 } as any)
+const CompaniesCompanyIdRoute = CompaniesCompanyIdRouteImport.update({
+  id: '/$companyId',
+  path: '/$companyId',
+  getParentRoute: () => CompaniesRoute,
+} as any)
 const ChatThreadIdRoute = ChatThreadIdRouteImport.update({
   id: '/chat/$threadId',
   path: '/chat/$threadId',
@@ -140,7 +146,7 @@ const ApiChatRoute = ApiChatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/assessment': typeof AssessmentRoute
-  '/companies': typeof CompaniesRoute
+  '/companies': typeof CompaniesRouteWithChildren
   '/dashboard': typeof DashboardRoute
   '/interview': typeof InterviewRoute
   '/job-ready': typeof JobReadyRoute
@@ -156,6 +162,7 @@ export interface FileRoutesByFullPath {
   '/today': typeof TodayRoute
   '/api/chat': typeof ApiChatRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
+  '/companies/$companyId': typeof CompaniesCompanyIdRoute
   '/projects/$projectId': typeof ProjectsProjectIdRoute
   '/roadmap/$day': typeof RoadmapDayRoute
   '/chat/': typeof ChatIndexRoute
@@ -163,7 +170,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/assessment': typeof AssessmentRoute
-  '/companies': typeof CompaniesRoute
+  '/companies': typeof CompaniesRouteWithChildren
   '/dashboard': typeof DashboardRoute
   '/interview': typeof InterviewRoute
   '/job-ready': typeof JobReadyRoute
@@ -179,6 +186,7 @@ export interface FileRoutesByTo {
   '/today': typeof TodayRoute
   '/api/chat': typeof ApiChatRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
+  '/companies/$companyId': typeof CompaniesCompanyIdRoute
   '/projects/$projectId': typeof ProjectsProjectIdRoute
   '/roadmap/$day': typeof RoadmapDayRoute
   '/chat': typeof ChatIndexRoute
@@ -187,7 +195,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/assessment': typeof AssessmentRoute
-  '/companies': typeof CompaniesRoute
+  '/companies': typeof CompaniesRouteWithChildren
   '/dashboard': typeof DashboardRoute
   '/interview': typeof InterviewRoute
   '/job-ready': typeof JobReadyRoute
@@ -203,6 +211,7 @@ export interface FileRoutesById {
   '/today': typeof TodayRoute
   '/api/chat': typeof ApiChatRoute
   '/chat/$threadId': typeof ChatThreadIdRoute
+  '/companies/$companyId': typeof CompaniesCompanyIdRoute
   '/projects/$projectId': typeof ProjectsProjectIdRoute
   '/roadmap/$day': typeof RoadmapDayRoute
   '/chat/': typeof ChatIndexRoute
@@ -228,6 +237,7 @@ export interface FileRouteTypes {
     | '/today'
     | '/api/chat'
     | '/chat/$threadId'
+    | '/companies/$companyId'
     | '/projects/$projectId'
     | '/roadmap/$day'
     | '/chat/'
@@ -251,6 +261,7 @@ export interface FileRouteTypes {
     | '/today'
     | '/api/chat'
     | '/chat/$threadId'
+    | '/companies/$companyId'
     | '/projects/$projectId'
     | '/roadmap/$day'
     | '/chat'
@@ -274,6 +285,7 @@ export interface FileRouteTypes {
     | '/today'
     | '/api/chat'
     | '/chat/$threadId'
+    | '/companies/$companyId'
     | '/projects/$projectId'
     | '/roadmap/$day'
     | '/chat/'
@@ -282,7 +294,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AssessmentRoute: typeof AssessmentRoute
-  CompaniesRoute: typeof CompaniesRoute
+  CompaniesRoute: typeof CompaniesRouteWithChildren
   DashboardRoute: typeof DashboardRoute
   InterviewRoute: typeof InterviewRoute
   JobReadyRoute: typeof JobReadyRoute
@@ -436,6 +448,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsProjectIdRouteImport
       parentRoute: typeof ProjectsRoute
     }
+    '/companies/$companyId': {
+      id: '/companies/$companyId'
+      path: '/$companyId'
+      fullPath: '/companies/$companyId'
+      preLoaderRoute: typeof CompaniesCompanyIdRouteImport
+      parentRoute: typeof CompaniesRoute
+    }
     '/chat/$threadId': {
       id: '/chat/$threadId'
       path: '/chat/$threadId'
@@ -452,6 +471,18 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+
+interface CompaniesRouteChildren {
+  CompaniesCompanyIdRoute: typeof CompaniesCompanyIdRoute
+}
+
+const CompaniesRouteChildren: CompaniesRouteChildren = {
+  CompaniesCompanyIdRoute: CompaniesCompanyIdRoute,
+}
+
+const CompaniesRouteWithChildren = CompaniesRoute._addFileChildren(
+  CompaniesRouteChildren,
+)
 
 interface ProjectsRouteChildren {
   ProjectsProjectIdRoute: typeof ProjectsProjectIdRoute
@@ -479,7 +510,7 @@ const RoadmapRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AssessmentRoute: AssessmentRoute,
-  CompaniesRoute: CompaniesRoute,
+  CompaniesRoute: CompaniesRouteWithChildren,
   DashboardRoute: DashboardRoute,
   InterviewRoute: InterviewRoute,
   JobReadyRoute: JobReadyRoute,

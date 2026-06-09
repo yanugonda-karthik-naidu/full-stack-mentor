@@ -54,6 +54,20 @@ export const COMPANIES: CompanyProfile[] = [
     goodToKnow: ["Spring Boot", "JavaScript"],
     skipForNow: ["Kubernetes", "Microservices"],
   },
+  {
+    name: "HCL",
+    pattern: "Aptitude + Technical MCQ → Coding → Technical → HR",
+    mustKnow: ["Java", "OOP", "SQL", "Project explanation"],
+    goodToKnow: ["Spring Boot", "REST APIs", "HTML/CSS/JS"],
+    skipForNow: ["Kubernetes", "Advanced System Design"],
+  },
+  {
+    name: "Tech Mahindra",
+    pattern: "Aptitude + English + Coding → Technical → HR",
+    mustKnow: ["Java", "OOP", "SQL", "Communication", "Project"],
+    goodToKnow: ["Spring Boot", "REST APIs"],
+    skipForNow: ["Cloud certs at fresher level", "Microservices"],
+  },
 ];
 
 export function companyExpectation(company: string, topic: string): Expectation {

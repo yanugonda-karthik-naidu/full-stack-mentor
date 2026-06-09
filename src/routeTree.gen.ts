@@ -19,8 +19,10 @@ import { Route as PracticeRouteImport } from './routes/practice'
 import { Route as PlacementRouteImport } from './routes/placement'
 import { Route as MotivationRouteImport } from './routes/motivation'
 import { Route as LinkedinRouteImport } from './routes/linkedin'
+import { Route as JobReadyRouteImport } from './routes/job-ready'
 import { Route as InterviewRouteImport } from './routes/interview'
 import { Route as DashboardRouteImport } from './routes/dashboard'
+import { Route as CompaniesRouteImport } from './routes/companies'
 import { Route as AssessmentRouteImport } from './routes/assessment'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ChatIndexRouteImport } from './routes/chat.index'
@@ -79,6 +81,11 @@ const LinkedinRoute = LinkedinRouteImport.update({
   path: '/linkedin',
   getParentRoute: () => rootRouteImport,
 } as any)
+const JobReadyRoute = JobReadyRouteImport.update({
+  id: '/job-ready',
+  path: '/job-ready',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InterviewRoute = InterviewRouteImport.update({
   id: '/interview',
   path: '/interview',
@@ -87,6 +94,11 @@ const InterviewRoute = InterviewRouteImport.update({
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompaniesRoute = CompaniesRouteImport.update({
+  id: '/companies',
+  path: '/companies',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AssessmentRoute = AssessmentRouteImport.update({
@@ -128,8 +140,10 @@ const ApiChatRoute = ApiChatRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/assessment': typeof AssessmentRoute
+  '/companies': typeof CompaniesRoute
   '/dashboard': typeof DashboardRoute
   '/interview': typeof InterviewRoute
+  '/job-ready': typeof JobReadyRoute
   '/linkedin': typeof LinkedinRoute
   '/motivation': typeof MotivationRoute
   '/placement': typeof PlacementRoute
@@ -149,8 +163,10 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/assessment': typeof AssessmentRoute
+  '/companies': typeof CompaniesRoute
   '/dashboard': typeof DashboardRoute
   '/interview': typeof InterviewRoute
+  '/job-ready': typeof JobReadyRoute
   '/linkedin': typeof LinkedinRoute
   '/motivation': typeof MotivationRoute
   '/placement': typeof PlacementRoute
@@ -171,8 +187,10 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/assessment': typeof AssessmentRoute
+  '/companies': typeof CompaniesRoute
   '/dashboard': typeof DashboardRoute
   '/interview': typeof InterviewRoute
+  '/job-ready': typeof JobReadyRoute
   '/linkedin': typeof LinkedinRoute
   '/motivation': typeof MotivationRoute
   '/placement': typeof PlacementRoute
@@ -194,8 +212,10 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/assessment'
+    | '/companies'
     | '/dashboard'
     | '/interview'
+    | '/job-ready'
     | '/linkedin'
     | '/motivation'
     | '/placement'
@@ -215,8 +235,10 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/assessment'
+    | '/companies'
     | '/dashboard'
     | '/interview'
+    | '/job-ready'
     | '/linkedin'
     | '/motivation'
     | '/placement'
@@ -236,8 +258,10 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/assessment'
+    | '/companies'
     | '/dashboard'
     | '/interview'
+    | '/job-ready'
     | '/linkedin'
     | '/motivation'
     | '/placement'
@@ -258,8 +282,10 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AssessmentRoute: typeof AssessmentRoute
+  CompaniesRoute: typeof CompaniesRoute
   DashboardRoute: typeof DashboardRoute
   InterviewRoute: typeof InterviewRoute
+  JobReadyRoute: typeof JobReadyRoute
   LinkedinRoute: typeof LinkedinRoute
   MotivationRoute: typeof MotivationRoute
   PlacementRoute: typeof PlacementRoute
@@ -347,6 +373,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LinkedinRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/job-ready': {
+      id: '/job-ready'
+      path: '/job-ready'
+      fullPath: '/job-ready'
+      preLoaderRoute: typeof JobReadyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/interview': {
       id: '/interview'
       path: '/interview'
@@ -359,6 +392,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof DashboardRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/companies': {
+      id: '/companies'
+      path: '/companies'
+      fullPath: '/companies'
+      preLoaderRoute: typeof CompaniesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/assessment': {
@@ -439,8 +479,10 @@ const RoadmapRouteWithChildren =
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AssessmentRoute: AssessmentRoute,
+  CompaniesRoute: CompaniesRoute,
   DashboardRoute: DashboardRoute,
   InterviewRoute: InterviewRoute,
+  JobReadyRoute: JobReadyRoute,
   LinkedinRoute: LinkedinRoute,
   MotivationRoute: MotivationRoute,
   PlacementRoute: PlacementRoute,

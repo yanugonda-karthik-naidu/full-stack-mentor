@@ -9,6 +9,21 @@ export type TopicPractice = {
 };
 
 const PRACTICE: Record<string, TopicPractice> = {
+  Variables: {
+    easy: ["Swap two numbers", "Area of rectangle", "Convert Celsius ↔ Fahrenheit"],
+    medium: ["Swap without temp variable", "Simple interest calculator"],
+    platforms: ["HackerRank → Java Stdin and Stdout", "HackerRank → Java Datatypes"],
+  },
+  Methods: {
+    easy: ["Method to find max of 2 numbers", "Method to check even/odd"],
+    medium: ["Method overloading: area(circle/rect)", "Recursive factorial"],
+    platforms: ["HackerRank → Java Method Overriding", "HackerRank → Recursion"],
+  },
+  "Exception Handling": {
+    easy: ["Handle ArithmeticException in division", "Handle NumberFormatException"],
+    medium: ["Custom AgeNotValidException", "Read file with try-with-resources"],
+    platforms: ["HackerRank → Java Exceptions", "HackerRank → Try/Catch"],
+  },
   Arrays: {
     easy: ["Find largest element", "Find smallest element", "Sum of array"],
     medium: ["Reverse array in place", "Second largest element", "Move zeros to end"],

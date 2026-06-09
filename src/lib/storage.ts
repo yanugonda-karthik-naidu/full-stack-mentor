@@ -11,6 +11,10 @@ const THREADS_KEY = "l2c.threads.v1";
 const PROGRESS_KEY = "l2c.progress.v1";
 const TASKS_KEY = "l2c.tasks.v1";
 const START_KEY = "l2c.startDate.v1";
+const JOURNAL_KEY = "l2c.journal.v1";
+const APPLICATIONS_KEY = "l2c.applications.v1";
+const COMPANY_PREP_KEY = "l2c.companyPrep.v1";
+const ASSESSMENT_KEY = "l2c.assessments.v1";
 
 export type ProgressState = {
   completedDays: number[];
@@ -117,4 +121,91 @@ export function currentDayNumber(): number {
 
 export function todayKey(): string {
   return new Date().toISOString().slice(0, 10);
+}
+
+// Daily accountability journal
+export type JournalEntry = {
+  date: string;
+  completed: string;
+  blocker: string;
+  tomorrowFocus: string;
+  mood: "great" | "ok" | "rough" | "";
+};
+export type JournalState = Record<string, JournalEntry>;
+
+export function loadJournal(): JournalState {
+  return read<JournalState>(JOURNAL_KEY, {});
+}
+export function saveJournal(j: JournalState) {
+  write(JOURNAL_KEY, j);
+}
+export function getJournal(date: string): JournalEntry | undefined {
+  return loadJournal()[date];
+}
+export function upsertJournal(entry: JournalEntry) {
+  const all = loadJournal();
+  all[entry.date] = entry;
+  saveJournal(all);
+}
+export function yesterdayKey(): string {
+  const d = new Date();
+  d.setDate(d.getDate() - 1);
+  return d.toISOString().slice(0, 10);
+}
+
+// Job application tracker
+export type ApplicationStatus =
+  | "Wishlist"
+  | "Applied"
+  | "OA / Test"
+  | "Interview"
+  | "Offer"
+  | "Rejected";
+export type Application = {
+  id: string;
+  company: string;
+  role: string;
+  status: ApplicationStatus;
+  appliedOn?: string;
+  notes?: string;
+  updatedAt: number;
+};
+export function loadApplications(): Application[] {
+  return read<Application[]>(APPLICATIONS_KEY, []);
+}
+export function saveApplications(a: Application[]) {
+  write(APPLICATIONS_KEY, a);
+}
+
+// Company prep checklist
+export type CompanyPrepState = Record<string, Record<string, boolean>>;
+export function loadCompanyPrep(): CompanyPrepState {
+  return read<CompanyPrepState>(COMPANY_PREP_KEY, {});
+}
+export function saveCompanyPrep(s: CompanyPrepState) {
+  write(COMPANY_PREP_KEY, s);
+}
+
+// Assessment history
+export type AssessmentResult = {
+  weekKey: string;
+  date: string;
+  score: number;
+  total: number;
+  weakTopics: string[];
+  strongTopics: string[];
+};
+export function loadAssessments(): AssessmentResult[] {
+  return read<AssessmentResult[]>(ASSESSMENT_KEY, []);
+}
+export function saveAssessments(a: AssessmentResult[]) {
+  write(ASSESSMENT_KEY, a);
+}
+export function recordAssessment(r: AssessmentResult) {
+  const all = loadAssessments().filter((x) => x.weekKey !== r.weekKey);
+  all.unshift(r);
+  saveAssessments(all);
+}
+export function weekKey(day: number): string {
+  return `W${Math.ceil(day / 7)}`;
 }

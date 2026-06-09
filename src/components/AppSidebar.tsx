@@ -6,6 +6,7 @@ import {
 import {
   BookOpen,
   Briefcase,
+  Building2,
   Calendar,
   ChartLine,
   ClipboardCheck,
@@ -20,6 +21,7 @@ import {
   Target,
   Trash2,
   Trophy,
+  Gauge,
   type LucideIcon,
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
@@ -61,6 +63,7 @@ const BUILD: NavItem[] = [
 
 const CAREER: NavItem[] = [
   { to: "/interview", label: "Interview Prep", icon: GraduationCap },
+  { to: "/companies", label: "Company Prep", icon: Building2 },
   { to: "/resume", label: "Resume Mentor", icon: FileText },
   { to: "/linkedin", label: "LinkedIn Mentor", icon: Link2 },
   { to: "/placement", label: "Placement Mentor", icon: BookOpen },
@@ -68,6 +71,7 @@ const CAREER: NavItem[] = [
 
 const PROGRESS: NavItem[] = [
   { to: "/progress", label: "Progress Tracking", icon: Target },
+  { to: "/job-ready", label: "Am I Job Ready?", icon: Gauge },
   { to: "/assessment", label: "Weekly Assessment", icon: ClipboardCheck },
   { to: "/motivation", label: "Motivation", icon: Trophy },
 ];

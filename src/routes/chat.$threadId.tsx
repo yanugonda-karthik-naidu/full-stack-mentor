@@ -92,6 +92,17 @@ function ChatInner({
     window.dispatchEvent(new Event("l2c:threads-changed"));
   }, [messages, threadId]);
 
+  // Pick up a seed prompt set from the landing page / mentor hub quick actions.
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    if (initialMessages.length > 0) return;
+    const seed = window.sessionStorage.getItem("l2c.seedPrompt");
+    if (!seed) return;
+    window.sessionStorage.removeItem("l2c.seedPrompt");
+    void sendMessage({ text: seed }, { body: { context } });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const loading = status === "submitted" || status === "streaming";
 
   const handleSend = async (text: string) => {

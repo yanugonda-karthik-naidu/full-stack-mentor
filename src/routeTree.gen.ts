@@ -18,6 +18,7 @@ import { Route as ProgressRouteImport } from './routes/progress'
 import { Route as PracticeRouteImport } from './routes/practice'
 import { Route as PlacementRouteImport } from './routes/placement'
 import { Route as MotivationRouteImport } from './routes/motivation'
+import { Route as MentorRouteImport } from './routes/mentor'
 import { Route as LinkedinRouteImport } from './routes/linkedin'
 import { Route as JobReadyRouteImport } from './routes/job-ready'
 import { Route as InterviewRouteImport } from './routes/interview'
@@ -75,6 +76,11 @@ const PlacementRoute = PlacementRouteImport.update({
 const MotivationRoute = MotivationRouteImport.update({
   id: '/motivation',
   path: '/motivation',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MentorRoute = MentorRouteImport.update({
+  id: '/mentor',
+  path: '/mentor',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LinkedinRoute = LinkedinRouteImport.update({
@@ -151,6 +157,7 @@ export interface FileRoutesByFullPath {
   '/interview': typeof InterviewRoute
   '/job-ready': typeof JobReadyRoute
   '/linkedin': typeof LinkedinRoute
+  '/mentor': typeof MentorRoute
   '/motivation': typeof MotivationRoute
   '/placement': typeof PlacementRoute
   '/practice': typeof PracticeRoute
@@ -175,6 +182,7 @@ export interface FileRoutesByTo {
   '/interview': typeof InterviewRoute
   '/job-ready': typeof JobReadyRoute
   '/linkedin': typeof LinkedinRoute
+  '/mentor': typeof MentorRoute
   '/motivation': typeof MotivationRoute
   '/placement': typeof PlacementRoute
   '/practice': typeof PracticeRoute
@@ -200,6 +208,7 @@ export interface FileRoutesById {
   '/interview': typeof InterviewRoute
   '/job-ready': typeof JobReadyRoute
   '/linkedin': typeof LinkedinRoute
+  '/mentor': typeof MentorRoute
   '/motivation': typeof MotivationRoute
   '/placement': typeof PlacementRoute
   '/practice': typeof PracticeRoute
@@ -226,6 +235,7 @@ export interface FileRouteTypes {
     | '/interview'
     | '/job-ready'
     | '/linkedin'
+    | '/mentor'
     | '/motivation'
     | '/placement'
     | '/practice'
@@ -250,6 +260,7 @@ export interface FileRouteTypes {
     | '/interview'
     | '/job-ready'
     | '/linkedin'
+    | '/mentor'
     | '/motivation'
     | '/placement'
     | '/practice'
@@ -274,6 +285,7 @@ export interface FileRouteTypes {
     | '/interview'
     | '/job-ready'
     | '/linkedin'
+    | '/mentor'
     | '/motivation'
     | '/placement'
     | '/practice'
@@ -299,6 +311,7 @@ export interface RootRouteChildren {
   InterviewRoute: typeof InterviewRoute
   JobReadyRoute: typeof JobReadyRoute
   LinkedinRoute: typeof LinkedinRoute
+  MentorRoute: typeof MentorRoute
   MotivationRoute: typeof MotivationRoute
   PlacementRoute: typeof PlacementRoute
   PracticeRoute: typeof PracticeRoute
@@ -376,6 +389,13 @@ declare module '@tanstack/react-router' {
       path: '/motivation'
       fullPath: '/motivation'
       preLoaderRoute: typeof MotivationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mentor': {
+      id: '/mentor'
+      path: '/mentor'
+      fullPath: '/mentor'
+      preLoaderRoute: typeof MentorRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/linkedin': {
@@ -515,6 +535,7 @@ const rootRouteChildren: RootRouteChildren = {
   InterviewRoute: InterviewRoute,
   JobReadyRoute: JobReadyRoute,
   LinkedinRoute: LinkedinRoute,
+  MentorRoute: MentorRoute,
   MotivationRoute: MotivationRoute,
   PlacementRoute: PlacementRoute,
   PracticeRoute: PracticeRoute,

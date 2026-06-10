@@ -51,6 +51,8 @@ import {
 type NavItem = { to: string; label: string; icon: LucideIcon };
 
 const LEARN: NavItem[] = [
+  { to: "/mentor", label: "AI Mentor Hub", icon: Sparkle },
+  { to: "/chat", label: "Ask Mentor", icon: MessageSquarePlus },
   { to: "/dashboard", label: "Dashboard", icon: ChartLine },
   { to: "/today", label: "Today's Mission", icon: Calendar },
   { to: "/roadmap", label: "Learning Roadmap", icon: Map },

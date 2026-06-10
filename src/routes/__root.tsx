@@ -88,7 +88,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
           "Personal AI mentor that guides complete beginners to Java Full Stack developer roles with a 120-day roadmap, daily tasks, projects and interview prep.",
       },
       { name: "author", content: "Learn2Compile" },
-      { property: "og:title", content: "Learn2Compile AI Mentor" },
+      { property: "og:title", content: "Learn2Compile AI Mentor — Beginner to Java Full Stack Job" },
       {
         property: "og:description",
         content:
@@ -97,6 +97,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
       { name: "twitter:site", content: "@Learn2Compile" },
+      { name: "twitter:title", content: "Learn2Compile AI Mentor — Beginner to Java Full Stack Job" },
+      { name: "description", content: "From beginner to job-ready developer. Learn Java Full Stack with AI guidance, projects, coding challenges, and interview preparation." },
+      { property: "og:description", content: "From beginner to job-ready developer. Learn Java Full Stack with AI guidance, projects, coding challenges, and interview preparation." },
+      { name: "twitter:description", content: "From beginner to job-ready developer. Learn Java Full Stack with AI guidance, projects, coding challenges, and interview preparation." },
+      { property: "og:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/357a367d-f84e-4b20-bc35-86f89841ebd9" },
+      { name: "twitter:image", content: "https://storage.googleapis.com/gpt-engineer-file-uploads/attachments/og-images/357a367d-f84e-4b20-bc35-86f89841ebd9" },
     ],
     links: [
       {
